@@ -11,18 +11,25 @@ objets=[9,12,42,125,51,156,200,257,642,787,925,959]
 
 
 def load(type):
-    images={}
+    imagesTest={}
+    imagesLearn={}
     for j in objets:
         print(j)
-		
-        moon=[]      
+                
+        moonTest=[]
+        moonLearn=[]
         i=0
         filename=type+'/'+str(j)+'/'+str(j)+'_r'
-        moon.append(mpimg.imread(filename+str(int(i))+'.png'))
+        moonTest.append(mpimg.imread(filename+str(int(i))+'.png'))
         for i in np.linspace(5,355,71):
-            moon.append(mpimg.imread(filename+str(int(i))+'.png'))
-        images[j]=moon
-    return images
+            if i%4==0:
+                moonTest.append(mpimg.imread(filename+str(int(i))+'.png'))
+            else:
+                moonLearn.append(mpimg.imread(filename+str(int(i))+'.png'))
+            
+        imagesTest[j]=moonTest
+        imagesLearn[j]=moonLearn
+    return (imagesTest,imagesLearn)
 
 def segmente(imagesSource,masks):
     for j in imagesSource.keys(): # parcourt les objets
@@ -43,18 +50,18 @@ def extract_features(image, vector_size=32):
     kps = alg.detect(image) # les descripteurs
     # Obtenir les 32 premiers.
     # Le nombre de points-cles varie en fonction de la taille de l'image et de la palette de couleurs
-    # Les trier en fonction de la valeur de réponse (plus c'est grand, mieux c'est)
+    # Les trier en fonction de la valeur de rÃ©ponse (plus c'est grand, mieux c'est)
     kps = sorted(kps, key=lambda x: -x.response)[:vector_size]
     # vecteur de descripteursr
     kps, dsc = alg.compute(image, kps) # calcule le descripteur pour un ensemble de point clis calculer sur l'image
     # Les metre tous dans un grand vecteur 
     dsc = dsc.flatten() # le mettre sur la meme ligne
-    # Descripteur de même taille
+    # Descripteur de mÃªme taille
     # La taille du vecteur descripteur est de 64
     needed_size = (vector_size * 64)
     if dsc.size < needed_size:
-        # Si nous avons moins de 32 descripteurs, il suffit d’ajouter des zéros au début
-        # fin de notre vecteur de fonctionnalité
+        # Si nous avons moins de 32 descripteurs, il suffit dâ€™ajouter des zÃ©ros au dÃ©but
+        # fin de notre vecteur de fonctionnalitÃ©
         dsc = np.concatenate([dsc, np.zeros(needed_size - dsc.size)])
     return dsc
 
