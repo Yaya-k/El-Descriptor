@@ -9,6 +9,8 @@ import numpy
 import scipy.spatial
 objets=[9,12,42,125,51,156,200,257,642,787,925,959]
 
+def rgb2gray(rgb):
+    return np.dot(rgb[...,:3], [0.2989, 0.5870, 0.1140])
 
 def load(type):
     imagesTest={}
