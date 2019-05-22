@@ -40,18 +40,22 @@ def computeLBPs(images,radius,n_points,compression=True):
         hs[j]=h
     return hs
 
-
-def comparaison(hTest,hLearn):
+def comparaisonTest(hTest,hLearn):
     for i in hTest.keys():
         for j in range(len(hTest[i])):
-            r=np.zeros([len(hLearn.keys()),len(hLearn[9])])
-            kp=0
-            for k in hLearn.keys():
-                for l in range(len(hLearn[k])):
-                    r[kp,l]=cv2.compareHist(np.float32(hTest[i][j]),np.float32(hLearn[k][l]),0)
-                kp+=1
-            print(i,hLearn.keys()[np.argmax(np.max(r,1))])
-    return r
+            r=comparaison(hLearn,hTest[i][j])
+            print(i,r)
+    return 0
+
+def comparaison(hLearn, h)
+    r=np.zeros([len(hLearn.keys()),len(hLearn[9])])
+    kp=0
+    for k in hLearn.keys():
+        for l in range(len(hLearn[k])):
+            r[kp,l]=cv2.compareHist(np.float32(h),np.float32(hLearn[k][l]),0)
+        kp+=1
+    print(i,hLearn.keys()[np.argmax(r)])
+    return hLearn.keys()[np.argmax(r)]
 
 
 
