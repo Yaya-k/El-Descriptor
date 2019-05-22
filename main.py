@@ -28,4 +28,4 @@ hTest=computeLBPs({k:imagesTest[k] for k in objets},radius,n_points,False)
 
 ## comparaison
 print('comparaison')
-r=comparaison(hTest,hLearn)
+r=comparaisonTest(hTest,hLearn)
