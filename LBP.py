@@ -47,7 +47,7 @@ def comparaisonTest(hTest,hLearn):
             print(i,r)
     return 0
 
-def comparaison(hLearn, h)
+def comparaison(hLearn, h):
     r=np.zeros([len(hLearn.keys()),len(hLearn[9])])
     kp=0
     for k in hLearn.keys():
