@@ -1,13 +1,6 @@
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 import numpy as np
 import skimage.feature
-from skimage import io as skio
-from skimage import filters
-from scipy import ndimage as ndi
-from skimage import morphology
 import copy
-import random
 import cv2
 from utils import rgb2gray
 
@@ -37,8 +30,10 @@ def computeLBPs(images,radius,n_points,compression=True):
         if compression :
             h=(h[2:]+h[1:-1]+h[:-2])/3
             h=h[:-1:3]
+            #h=sum(h,0)/len(h)
         hs[j]=h
     return hs
+
 
 def comparaisonTest(hTest,hLearn):
     for i in hTest.keys():
@@ -54,8 +49,8 @@ def comparaison(hLearn, h):
         for l in range(len(hLearn[k])):
             r[kp,l]=cv2.compareHist(np.float32(h),np.float32(hLearn[k][l]),0)
         kp+=1
-    print(i,hLearn.keys()[np.argmax(r)])
     return hLearn.keys()[np.argmax(r)]
+
 
 
 
